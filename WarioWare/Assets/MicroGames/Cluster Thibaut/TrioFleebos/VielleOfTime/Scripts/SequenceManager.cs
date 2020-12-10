@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Testing;
+using UnityEngine.UI;
 
 namespace Fleebos
 {
@@ -24,7 +25,7 @@ namespace Fleebos
             int Medium = 4;
             int Hard = 5;
 
-            int NoteOrder = 0;
+            [HideInInspector] public int NoteOrder = 0;
 
             VielleManager VL;
 
@@ -63,46 +64,47 @@ namespace Fleebos
 
             }
 
-            //FixedUpdate is called on a fixed time.
-            public override void FixedUpdate()
+            private void Update()
             {
-                base.FixedUpdate(); //Do not erase this line!
-
-                if (VL.turnActivation == true)
+                if (VL.turnActivation == true && NoteOrder < MusicNotes.Count)
                 {
                     if (Input.GetButtonDown("A_Button"))
                     {
-                        if(MusicNotes[NoteOrder].name == "A_Button_Sequence")
+                        if (MusicNotes[NoteOrder].name == "A_Button_Sequence")
                         {
-                            Instantiate(particleWin, NotesUI[NoteOrder].transform);
-                            NoteOrder++;                            
+                            PlayNote();
                         }
                     }
                     if (Input.GetButtonDown("B_Button"))
                     {
                         if (MusicNotes[NoteOrder].name == "B_Button_Sequence")
                         {
-                            Instantiate(particleWin, NotesUI[NoteOrder].transform);
-                            NoteOrder++;
+                            PlayNote();
                         }
                     }
                     if (Input.GetButtonDown("X_Button"))
                     {
                         if (MusicNotes[NoteOrder].name == "X_Button_Sequence")
                         {
-                            Instantiate(particleWin, NotesUI[NoteOrder].transform);
-                            NoteOrder++;
+                            PlayNote();
                         }
                     }
                     if (Input.GetButtonDown("Y_Button"))
                     {
                         if (MusicNotes[NoteOrder].name == "Y_Button_Sequence")
                         {
-                            Instantiate(particleWin, NotesUI[NoteOrder].transform);
-                            NoteOrder++;
+                            PlayNote();
                         }
                     }
                 }
+            }
+
+            //FixedUpdate is called on a fixed time.
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate(); //Do not erase this line!
+
+                
             }
 
             //TimedUpdate is called once every tick.
@@ -113,7 +115,9 @@ namespace Fleebos
 
             public void PlayNote()
             {
-                
+                Instantiate(particleWin, NotesUI[NoteOrder].transform);
+                NotesUI[NoteOrder].GetComponentInChildren<Image>().color = Color.black;
+                NoteOrder++;
             }
         }
     }
