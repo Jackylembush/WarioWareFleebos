@@ -13,17 +13,24 @@ namespace Fleebos
         {
             float timeCounter;
             public float speed, height, width, triggerValue;
+            bool pinched;
 
             public Transform centerPoint;
             Rigidbody2D rb;
 
             public float rayCastDist;
-            public GameObject pinchPoint;
+            public Transform pinchPoint;
+            public Transform linePoint,linePoint2;
             public LineRenderer line;
+            public GameObject box;
+
+            public Animator bananaAnimator;
+            int peelCounter = 0;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
                 rb = gameObject.GetComponent<Rigidbody2D>();
+                lineStartSetup();
 
             }
 
@@ -32,14 +39,42 @@ namespace Fleebos
             {
                 base.FixedUpdate(); //Do not erase this line!
 
-                #region Movement
+                #region rotation
+
+                Vector2 lookDir = centerPoint.transform.position - transform.position;
+                float angle = Mathf.Atan2(lookDir.y,lookDir.x) * Mathf.Rad2Deg - 90f;
+                rb.rotation = angle;
+                #endregion
+
+                Movement();
+                if (pinched == false)
+                {
+                    Checking();
+                }
+
+                if(pinched == true)
+                {
+                    Line();
+                    MoveCollider();
+                }
+
+            }
+
+            //TimedUpdate is called once every tick.
+            public override void TimedUpdate()
+            {
+
+            }
+
+            public void Movement()
+            {
                 if (Input.GetAxis("Right_Trigger") >= 0.5f)
                 {
-                    triggerValue = 1f;
-                }
-                else if (Input.GetAxis("Left_Trigger") >= 0.5f)
-                {
                     triggerValue = -1f;
+                }
+                else if (Input.GetAxis("Left_Trigger") >= 0.5f && pinched == false)
+                {
+                    triggerValue = 1f;
                 }
                 else
                 {
@@ -47,7 +82,7 @@ namespace Fleebos
                 }
 
                 //Set Time counter according to triggerValue
-                if(triggerValue == 1)
+                if (triggerValue == 1)
                 {
                     timeCounter += Time.deltaTime * speed;
                 }
@@ -60,23 +95,6 @@ namespace Fleebos
                 float y = Mathf.Sin(timeCounter) * height;
 
                 transform.position = new Vector2(x, y);
-                #endregion
-
-                #region rotation
-
-                Vector2 lookDir = centerPoint.transform.position - transform.position;
-                float angle = Mathf.Atan2(lookDir.y,lookDir.x) * Mathf.Rad2Deg - 90f;
-                rb.rotation = angle;
-                #endregion
-
-                Checking();
-                Line();
-            }
-
-            //TimedUpdate is called once every tick.
-            public override void TimedUpdate()
-            {
-
             }
 
             public void Checking()
@@ -87,9 +105,8 @@ namespace Fleebos
                 {
                     if (hit.collider.CompareTag("Enemy1"))
                     {
-                        GameObject bananaPeel = hit.collider.gameObject;
-
-                        bananaPeel.transform.position = pinchPoint.transform.position;
+                        pinched = true;
+                        box = hit.collider.gameObject;
                     }
                 }
             }
@@ -97,7 +114,23 @@ namespace Fleebos
             public void Line()
             {
                 line.SetPosition(0, pinchPoint.transform.position);
-                line.SetPosition(1, transform.position);
+                line.SetPosition(1, linePoint.transform.position);
+            }
+
+            public void MoveCollider()
+            {
+                box.transform.position = pinchPoint.transform.position;
+            }
+            public void lineStartSetup()
+            {
+                line.SetPosition(0, linePoint2.transform.position);
+                line.SetPosition(1, linePoint.transform.position);
+            }
+
+            public void Peel()
+            {
+                peelCounter += 1;
+                bananaAnimator.SetTrigger("Peel");
             }
         }
     }
