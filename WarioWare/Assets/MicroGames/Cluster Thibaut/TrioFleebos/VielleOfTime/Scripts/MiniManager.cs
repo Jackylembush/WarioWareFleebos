@@ -29,7 +29,7 @@ namespace Fleebos
             //TimedUpdate is called once every tick.
             public override void TimedUpdate()
             {
-                if (SM.NoteOrder >= SM.MusicNotes.Count && Tick < 8)
+                if (SM.NoteOrder >= SM.MusicNotes.Count && Tick == 8)
                 {
                     Manager.Instance.Result(true);
                 }
