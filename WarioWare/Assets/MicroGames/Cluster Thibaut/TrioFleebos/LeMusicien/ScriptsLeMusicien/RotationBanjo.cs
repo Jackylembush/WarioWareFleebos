@@ -27,11 +27,11 @@ namespace Fleebos
                         break;
                     case Manager.Difficulty.MEDIUM:
                         rotationValue = 60f;
-                        rotationPositions = 360f / rotationValue;
+                        rotationPositions = 360f/rotationValue;
                         break;
                     case Manager.Difficulty.HARD:
                         rotationValue = 45f;
-                        rotationPositions = 360f / rotationValue;
+                        rotationPositions = 360f/rotationValue;
                         break;
                 }
 
@@ -50,21 +50,23 @@ namespace Fleebos
             {
                 base.FixedUpdate(); //Do not erase this line!
 
-            if (Tick < 8 && rightTriggerPressed == false && Input.GetAxis("Right_Trigger") == 1f)
-            {
-                transform.Rotate(new Vector3(0, 0, -rotationValue));
-                rightTriggerPressed = true;
-            }
+                if (Tick < 8 && rightTriggerPressed == false && Input.GetAxis("Right_Trigger") == 1f)
+                {
+                    transform.Rotate(new Vector3(0, 0, -rotationValue));
+                    rightTriggerPressed = true;
+                }
+
                 if (Input.GetAxis("Right_Trigger") == 0f)
                 {
                     rightTriggerPressed = false;
                 }
 
-            if (Tick < 8 && leftTriggerPressed == false && Input.GetAxis("Left_Trigger") == 1f)
-            {
-                 transform.Rotate(new Vector3(0, 0, rotationValue));
-                 leftTriggerPressed = true;
-            }
+                if (Tick < 8 && leftTriggerPressed == false && Input.GetAxis("Left_Trigger") == 1f)
+                {
+                     transform.Rotate(new Vector3(0, 0, rotationValue));
+                     leftTriggerPressed = true;
+                }
+
                 if (Input.GetAxis("Left_Trigger") == 0f)
                 {
                     leftTriggerPressed = false;
@@ -76,12 +78,19 @@ namespace Fleebos
             {
                 if (Tick == 8)
                 {
+                    if (transform.rotation.z > -1 && transform.rotation.z < 1)
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, 0);
+                    }
+
+                    Debug.Log(transform.rotation.z);
                     if( transform.rotation.z == 0f)
                     {
                         Debug.Log("win");
                         Manager.Instance.Result(true);
                     }
-                    if (transform.rotation.z < 0f || transform.rotation.z > 0f)
+
+                    else if (transform.rotation.z != 0f)
                     {
                         Debug.Log("loose");
                         Manager.Instance.Result(false);
