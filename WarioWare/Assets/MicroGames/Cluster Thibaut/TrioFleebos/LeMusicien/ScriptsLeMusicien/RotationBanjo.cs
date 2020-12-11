@@ -15,9 +15,15 @@ namespace Fleebos
             public float rotationValue;
             public float rotationPositions;
 
+            public GameObject mouth;
+
+            [HideInInspector]public Animator m_Animator;
+            public GameObject audiance;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
+
+                m_Animator = audiance.GetComponent<Animator>();
 
                 switch (currentDifficulty)
                 {
@@ -49,6 +55,8 @@ namespace Fleebos
             public override void FixedUpdate()
             {
                 base.FixedUpdate(); //Do not erase this line!
+
+                m_Animator.speed = m_Animator.speed * (bpm / 60);
 
                 if (Tick < 8 && rightTriggerPressed == false && Input.GetAxis("Right_Trigger") == 1f)
                 {
@@ -88,6 +96,7 @@ namespace Fleebos
                     {
                         Debug.Log("win");
                         Manager.Instance.Result(true);
+                        mouth.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * -1, transform.localScale.z);
                     }
 
                     else if (transform.rotation.z != 0f)
