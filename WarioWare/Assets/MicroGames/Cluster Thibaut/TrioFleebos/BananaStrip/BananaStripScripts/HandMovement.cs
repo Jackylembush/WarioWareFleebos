@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Testing;
 
 namespace Fleebos
 {
@@ -26,6 +27,7 @@ namespace Fleebos
 
             public Animator bananaAnimator;
             int peelCounter = 0;
+            bool peeled = false;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
@@ -63,7 +65,14 @@ namespace Fleebos
             //TimedUpdate is called once every tick.
             public override void TimedUpdate()
             {
-
+                if(Tick == 8 && peeled == false)
+                {
+                    Manager.Instance.Result(false);
+                }
+                else if (Tick == 8 && peeled == true)
+                {
+                    Manager.Instance.Result(true);
+                }
             }
 
             public void Movement()
@@ -131,6 +140,10 @@ namespace Fleebos
             {
                 peelCounter += 1;
                 bananaAnimator.SetTrigger("Peel");
+                if(peelCounter == 2)
+                {
+                    peeled = true;
+                }
             }
         }
     }
