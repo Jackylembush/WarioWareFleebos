@@ -24,6 +24,9 @@ namespace Fleebos
             public float animatorBaseSpeed;
 
             public GameObject audiance;
+
+            public AudioClip[] soundList;
+            public AudioSource randomChordAS;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
@@ -66,6 +69,7 @@ namespace Fleebos
                 {
                     transform.Rotate(new Vector3(0, 0, -rotationValue));
                     rightTriggerPressed = true;
+                    RandomChord();
                 }
 
                 if (Input.GetAxis("Right_Trigger") == 0f)
@@ -75,8 +79,9 @@ namespace Fleebos
 
                 if (Tick < 8 && leftTriggerPressed == false && Input.GetAxis("Left_Trigger") == 1f)
                 {
-                     transform.Rotate(new Vector3(0, 0, rotationValue));
-                     leftTriggerPressed = true;
+                    transform.Rotate(new Vector3(0, 0, rotationValue));
+                    leftTriggerPressed = true;
+                    RandomChord();
                 }
 
                 if (Input.GetAxis("Left_Trigger") == 0f)
@@ -112,6 +117,13 @@ namespace Fleebos
                     }
 
                 }
+            }
+
+            private void RandomChord()
+            {
+                int randomSound = Random.Range(0, soundList.Length - 1);
+                randomChordAS.clip = soundList[randomSound];
+                randomChordAS.Play();
             }
         }
     }
