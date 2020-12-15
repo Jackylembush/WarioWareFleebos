@@ -28,6 +28,12 @@ namespace Fleebos
             public Animator bananaAnimator;
             int peelCounter = 0;
             bool peeled = false;
+
+            //Visel Win
+            public float outSpeed;
+            public Animator monkey1,monkey2,banana;
+            public GameObject peel;
+            public ParticleSystem star,bananaLauncher1,bananaLauncher2;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
@@ -47,8 +53,15 @@ namespace Fleebos
                 float angle = Mathf.Atan2(lookDir.y,lookDir.x) * Mathf.Rad2Deg - 90f;
                 rb.rotation = angle;
                 #endregion
+                if(peeled == false)
+                {
+                    Movement();
+                }
+                else if (peeled == true)
+                {
+                    MoveOut();
+                }
 
-                Movement();
                 if (pinched == false)
                 {
                     Checking();
@@ -115,6 +128,7 @@ namespace Fleebos
                     if (hit.collider.CompareTag("Enemy1"))
                     {
                         pinched = true;
+                        gameObject.GetComponent<Animator>().SetTrigger("Transition");
                         box = hit.collider.gameObject;
                     }
                 }
@@ -143,7 +157,32 @@ namespace Fleebos
                 if(peelCounter == 2)
                 {
                     peeled = true;
+                    monkey1.SetTrigger("Transition");
+                    monkey2.SetTrigger("Transition");
+                    banana.SetTrigger("Transition");
                 }
+            }
+
+            public void MoveOut()
+            {
+                //Banana Peel goes down
+                peel.transform.position += Vector3.up * Time.deltaTime * outSpeed;
+                //Monkey Hand goes right
+                gameObject.transform.position += Vector3.right * Time.deltaTime * outSpeed;
+                //LineRenderer set active false
+                if(line.gameObject.activeSelf == true)
+                {
+                    line.gameObject.SetActive(false);
+                }
+                //Particule Effect
+                if(star.isPlaying == false)
+                {
+                    star.Play(true);
+                    bananaLauncher1.Play(true);
+                    bananaLauncher2.Play(true);
+                }
+
+
             }
         }
     }
