@@ -34,10 +34,10 @@ namespace Fleebos
                 base.Start(); //Do not erase this line!
 
                 VL = GetComponent<VielleManager>();
-                ListOfNotesLength = Hard;
+                //ListOfNotesLength = Hard;
 
 
-                /*switch (currentDifficulty)
+                switch (currentDifficulty)
                 {
                     case Manager.Difficulty.EASY:
                         ListOfNotesLength = Easy;
@@ -50,7 +50,7 @@ namespace Fleebos
                     case Manager.Difficulty.HARD:
                         ListOfNotesLength = Hard;
                         break;
-                }*/
+                }
 
                 for (int i = 0; i < ListOfNotesLength; i++)
                 {

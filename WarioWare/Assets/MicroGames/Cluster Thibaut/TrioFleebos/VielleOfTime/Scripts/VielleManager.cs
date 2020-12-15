@@ -16,6 +16,8 @@ namespace Fleebos
             Vector2 joystickRotation;
             Vector2 currentJoystickRotation;
 
+            AudioSource drone;
+
             public Image turnSignal;
 
             [HideInInspector] public bool turnActivation = false;
@@ -27,6 +29,7 @@ namespace Fleebos
 
                 joystickRotation = new Vector2(1,1);
                 turnSignal.color = Color.red;
+                drone = GetComponentInChildren<AudioSource>();
             }
 
             //FixedUpdate is called on a fixed time.
@@ -56,6 +59,7 @@ namespace Fleebos
                     joystickRotation = currentJoystickRotation;
                 }
 
+                drone.volume = turnSignal.fillAmount;
 
             }
 
@@ -68,7 +72,7 @@ namespace Fleebos
             public void TurnIsOn()
             {
                 turnActivation = true;
-                turnSignal.color = Color.green;
+                turnSignal.color = Color.white;
             }
 
             public void TurnIsOff()
