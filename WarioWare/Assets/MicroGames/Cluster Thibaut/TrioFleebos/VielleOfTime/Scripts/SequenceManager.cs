@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Testing;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Fleebos
 {
@@ -19,6 +20,8 @@ namespace Fleebos
             public GameObject[] Inputs;
             public GameObject[] NotesUI;
             public List<GameObject> MusicNotes;
+
+            public GameObject[] VielleTouches;
             
             int ListOfNotesLength;
             int Easy = 3;
@@ -95,6 +98,31 @@ namespace Fleebos
                         }
                     }
                 }
+
+                else if (VL.turnActivation == true && NoteOrder >= MusicNotes.Count)
+                {
+                    if (Input.GetButtonDown("A_Button"))
+                    {
+                        NotesUI[0].GetComponent<AudioSource>().Play();
+                        StartCoroutine(AnimateTheNote(0));
+                    }
+                    if (Input.GetButtonDown("B_Button"))
+                    {
+                        NotesUI[1].GetComponent<AudioSource>().Play();
+                        StartCoroutine(AnimateTheNote(1));
+                    }
+                    if (Input.GetButtonDown("X_Button"))
+                    {
+                        NotesUI[2].GetComponent<AudioSource>().Play();
+                        StartCoroutine(AnimateTheNote(2));
+                    }
+                    if (Input.GetButtonDown("Y_Button"))
+                    {
+                        NotesUI[3].GetComponent<AudioSource>().Play();
+                        StartCoroutine(AnimateTheNote(3));
+                    }
+                }
+
             }
 
             //FixedUpdate is called on a fixed time.
@@ -114,9 +142,44 @@ namespace Fleebos
             public void PlayNote()
             {
                 NotesUI[NoteOrder].GetComponent<AudioSource>().Play();
+                AnimateNote();
                 Instantiate(particleWin, NotesUI[NoteOrder].transform);
                 NotesUI[NoteOrder].GetComponentInChildren<Image>().color = Color.black;
                 NoteOrder++;
+            }
+
+            public void AnimateNote()
+            {
+                switch (NoteOrder)
+                {
+                    case 0:
+                        StartCoroutine(AnimateTheNote(0));                    
+                        break;
+
+                    case 1:
+                        StartCoroutine(AnimateTheNote(1));
+                        break;
+
+                    case 2:
+                        StartCoroutine(AnimateTheNote(2));
+                        break;
+
+                    case 3:
+                        StartCoroutine(AnimateTheNote(4));
+                        break;
+
+                    case 4:
+                        StartCoroutine(AnimateTheNote(3));
+                        break;
+                }
+            }
+
+            IEnumerator AnimateTheNote(int Order)
+            {
+                VielleTouches[Order].transform.DOMoveY(-2.6f, 0.2f);
+                yield return new WaitForSeconds(0.2f);
+                VielleTouches[Order].transform.DOMoveY(-2.9f, 0.2f);
+                yield return new WaitForSeconds(0.2f);
             }
         }
     }
