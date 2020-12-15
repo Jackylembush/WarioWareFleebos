@@ -34,8 +34,6 @@ namespace Fleebos
                 base.Start(); //Do not erase this line!
 
                 VL = GetComponent<VielleManager>();
-                //ListOfNotesLength = Hard;
-
 
                 switch (currentDifficulty)
                 {
@@ -115,6 +113,7 @@ namespace Fleebos
 
             public void PlayNote()
             {
+                NotesUI[NoteOrder].GetComponent<AudioSource>().Play();
                 Instantiate(particleWin, NotesUI[NoteOrder].transform);
                 NotesUI[NoteOrder].GetComponentInChildren<Image>().color = Color.black;
                 NoteOrder++;

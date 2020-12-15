@@ -458,9 +458,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde5c291e73811d4e9f119f618206f29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idCard: {fileID: 11400000, guid: ab130a2778ec91940af740163402a016, type: 2}
-  bpm: 140
-  currentDifficulty: 0
+  idCard: {fileID: 11400000, guid: 5324ce4cc8da3694198c15dc6236e9bf, type: 2}
+  bpm: 90
+  currentDifficulty: 2
   panel: {fileID: 137554992}
   resultText: {fileID: 224949527}
   verbePanel: {fileID: 967534524}
@@ -763,7 +763,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.1000061, y: 0}
+  m_AnchoredPosition: {x: 1.0999756, y: 0}
   m_SizeDelta: {x: 24.620758, y: 22.387817}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &967534526
