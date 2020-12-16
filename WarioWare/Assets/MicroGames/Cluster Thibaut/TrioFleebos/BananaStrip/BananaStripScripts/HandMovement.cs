@@ -128,6 +128,7 @@ namespace Fleebos
                     if (hit.collider.CompareTag("Enemy1"))
                     {
                         pinched = true;
+                        SoundManager.sd.PlaySound(3);
                         gameObject.GetComponent<Animator>().SetTrigger("Transition");
                         box = hit.collider.gameObject;
                     }
@@ -154,6 +155,7 @@ namespace Fleebos
             {
                 peelCounter += 1;
                 bananaAnimator.SetTrigger("Peel");
+                SoundManager.sd.PlaySound(2);
                 if(peelCounter == 2)
                 {
                     peeled = true;
