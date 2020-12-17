@@ -37,15 +37,15 @@ namespace Fleebos
 
                 switch (currentDifficulty)
                 {
-                    case Manager.Difficulty.EASY:
+                    case Difficulty.EASY:
                         rotationValue = 60f;
                         rotationPositions = 360f/rotationValue;
                         break;
-                    case Manager.Difficulty.MEDIUM:
+                    case Difficulty.MEDIUM:
                         rotationValue = 45f;
                         rotationPositions = 360f/rotationValue;
                         break;
-                    case Manager.Difficulty.HARD:
+                    case Difficulty.HARD:
                         rotationValue = 30f;
                         rotationPositions = 360f/rotationValue;
                         break;
