@@ -19,7 +19,6 @@ namespace Fleebos
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
-                PlaySound(1);
             }
 
             //FixedUpdate is called on a fixed time.

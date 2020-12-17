@@ -8,7 +8,6 @@ namespace Fleebos
     {
         public class PeelBehaviour : TimedBehaviour
         {
-            public HandMovement hand;
 
             public override void Start()
             {
@@ -22,17 +21,22 @@ namespace Fleebos
 
             }
 
-            //TimedUpdate is called once every tick.
-            public override void TimedUpdate()
-            {
-
-            }
-
             public void OnTriggerEnter2D(Collider2D collision)
             {
                 if (collision.CompareTag("Enemy2"))
                 {
-                    hand.Peel();
+                    switch (currentDifficulty)
+                    {
+                        case Difficulty.EASY:
+                            GameManagerBanana.gm.PeelEASY();
+                            break;
+                        case Difficulty.MEDIUM:
+                            GameManagerBanana.gm.PeelMEDIUM();
+                            break;
+                        case Difficulty.HARD:
+                            GameManagerBanana.gm.PeelHARD();
+                            break;
+                    }
                 }
             }
         }

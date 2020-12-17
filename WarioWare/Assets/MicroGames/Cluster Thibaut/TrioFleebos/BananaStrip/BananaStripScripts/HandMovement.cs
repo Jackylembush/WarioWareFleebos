@@ -19,17 +19,19 @@ namespace Fleebos
             public Transform centerPoint;
             Rigidbody2D rb;
 
+            [Header ("Hand")]
             public float rayCastDist;
             public Transform pinchPoint;
             public Transform linePoint,linePoint2;
             public LineRenderer line;
             public GameObject box;
 
+            [Header("Banana")]
             public Animator bananaAnimator;
             int peelCounter = 0;
             bool peeled = false;
 
-            //Visel Win
+            [Header ("Win Visuals")]
             public float outSpeed;
             public Animator monkey1,monkey2,banana;
             public GameObject peel;
