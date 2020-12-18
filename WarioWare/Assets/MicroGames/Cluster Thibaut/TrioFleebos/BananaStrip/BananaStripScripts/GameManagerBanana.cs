@@ -14,7 +14,7 @@ namespace Fleebos
             float timeCounter;
             public float speed, height, width, triggerValue;
             bool pinched;
-
+            bool isHard = false;
             
 
             [Header("Hand")]
@@ -36,6 +36,10 @@ namespace Fleebos
             bool peeled = false;
             public GameObject peelP1, peelP2;
 
+            [Header("VFX")]
+            public ParticleSystem arrowUp;
+            public ParticleSystem arrowDown;
+
             [Header("Win Visuals")]
             public float outSpeed;
             public Animator monkey1, monkey2, banana;
@@ -49,7 +53,7 @@ namespace Fleebos
             {
                 base.Start(); //Do not erase this line!
 
-                lineStartSetup();
+
 
                 switch (currentDifficulty)
                 {
@@ -63,12 +67,18 @@ namespace Fleebos
                         break;
                     case Difficulty.HARD:
                         peel = peels[2];
+                        peelP1 = peel.transform.GetChild(3).gameObject;
+                        peelP2 = peel.transform.GetChild(4).gameObject;
+                        peelP1.SetActive(false);
+                        peelP2.SetActive(false);
+                        isHard = true;
                         break;
                 }
                 peel.SetActive(true);
                 bananaAnimator = peel.GetComponent<Animator>();
                 linePoint = peel.transform.GetChild(0);
                 linePoint2 = peel.transform.GetChild(1);
+                lineStartSetup();
 
                 switch (bpm)
                 {
@@ -134,11 +144,11 @@ namespace Fleebos
             {
                 #region Movement
                 //Set Trigger value according to input value
-                if (Input.GetAxis("Right_Trigger") >= 0.5f && (pinched == false || peelCounter < 2))
+                if (Input.GetAxis("Right_Trigger") >= 0.5f && (pinched == false || peelCounter < 2 || isHard == true))
                 {
                     triggerValue = -1f;
                 }
-                else if (Input.GetAxis("Left_Trigger") >= 0.5f && (pinched == false || peelCounter >= 2))
+                else if (Input.GetAxis("Left_Trigger") >= 0.5f && (pinched == false || peelCounter >= 2 || isHard == true))
                 {
                     triggerValue = 1f;
                 }
@@ -185,6 +195,12 @@ namespace Fleebos
                         SoundManager.sd.PlaySound(3);
                         hand.GetComponent<Animator>().SetTrigger("Transition");
                         box = hit.collider.gameObject;
+                        if (isHard == true)
+                        {
+                            bananaAnimator.SetTrigger("Peel");
+                            arrowUp.Play();
+                            peelP1.SetActive(true);
+                        }
                     }
                 }
             }
@@ -249,7 +265,38 @@ namespace Fleebos
             }
             public void PeelHARD()
             {
-
+                peelCounter += 1;
+                switch (peelCounter)
+                {
+                    case 1:
+                        SoundManager.sd.PlaySound(2);
+                        arrowDown.Play();
+                        Debug.Log("peelCount = 1");
+                        peelP1.SetActive(false);
+                        peelP2.SetActive(true);
+                        break;
+                    case 2:
+                        SoundManager.sd.PlaySound(3);
+                        arrowUp.Play();
+                        Debug.Log("peelCount = 2");
+                        peelP1.SetActive(true);
+                        peelP2.SetActive(false);
+                        break;
+                    case 3:
+                        SoundManager.sd.PlaySound(2);
+                        arrowDown.Play();
+                        Debug.Log("peelCount = 3");
+                        peelP1.SetActive(false);
+                        peelP2.SetActive(true);
+                        break;
+                    case 4:
+                        SoundManager.sd.PlaySound(3);
+                        peeled = true;
+                        monkey1.SetTrigger("Transition");
+                        monkey2.SetTrigger("Transition");
+                        banana.SetTrigger("Transition");
+                        break;
+                }
             }
 
             public void WinAnimation()
