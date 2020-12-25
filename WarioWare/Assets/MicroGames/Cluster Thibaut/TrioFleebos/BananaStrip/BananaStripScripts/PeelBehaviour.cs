@@ -8,7 +8,7 @@ namespace Fleebos
     {
         public class PeelBehaviour : TimedBehaviour
         {
-
+            public GameObject popParticule;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
@@ -29,12 +29,15 @@ namespace Fleebos
                     {
                         case Difficulty.EASY:
                             GameManagerBanana.gm.PeelEASY();
+                            Instantiate(popParticule, transform.position, Quaternion.identity);
                             break;
                         case Difficulty.MEDIUM:
                             GameManagerBanana.gm.PeelMEDIUM();
+                            Instantiate(popParticule, transform.position, Quaternion.identity);
                             break;
                         case Difficulty.HARD:
                             GameManagerBanana.gm.PeelHARD();
+                            Instantiate(popParticule, transform.position,Quaternion.identity);
                             break;
                     }
                 }

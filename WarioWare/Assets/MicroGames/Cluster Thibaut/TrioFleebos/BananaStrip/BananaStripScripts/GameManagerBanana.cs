@@ -43,7 +43,7 @@ namespace Fleebos
             [Header("Win Visuals")]
             public float outSpeed;
             public Animator monkey1, monkey2, banana;
-            public ParticleSystem star, bananaLauncher1, bananaLauncher2;
+            public ParticleSystem star, bananaLauncher1, bananaLauncher2, monkeyDown1, monkeyDown2, monkeySide1, monkeySide2;
 
             private void Awake()
             {
@@ -316,6 +316,21 @@ namespace Fleebos
                     star.Play(true);
                     bananaLauncher1.Play(true);
                     bananaLauncher2.Play(true);
+                    switch (currentDifficulty)
+                    {
+                        case Difficulty.EASY:
+                            break;
+                        case Difficulty.MEDIUM:
+                            monkeyDown1.Play();
+                            monkeyDown2.Play();
+                            break;
+                        case Difficulty.HARD:
+                            monkeyDown1.Play();
+                            monkeyDown2.Play();
+                            monkeySide1.Play();
+                            monkeySide2.Play();
+                            break;
+                    }
                 }
 
 
