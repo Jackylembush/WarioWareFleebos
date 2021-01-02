@@ -16,6 +16,9 @@ namespace Fleebos
             Vector2 joystickRotation;
             Vector2 currentJoystickRotation;
 
+            public Animator animManivelle;
+            public Animator animPoignée;          
+
             AudioSource drone;
 
             public Image turnSignal;
@@ -30,6 +33,8 @@ namespace Fleebos
                 joystickRotation = new Vector2(1,1);
                 turnSignal.color = Color.red;
                 drone = GetComponentInChildren<AudioSource>();
+                animManivelle.speed = 0;
+                animPoignée.speed = 0;
             }
 
             //FixedUpdate is called on a fixed time.
@@ -42,15 +47,21 @@ namespace Fleebos
                 if (turnSignal.fillAmount > 0)
                 {
                     turnSignal.fillAmount -= Time.deltaTime / 2;
+                    animManivelle.speed = turnSignal.fillAmount;
+                    animPoignée.speed = turnSignal.fillAmount;
                 }      
                 
                 if(turnSignal.fillAmount > 0.85f && turnActivation == false)
                 {
                     TurnIsOn();
+                    animManivelle.speed = 1;
+                    animPoignée.speed = 1;
                 }
                 if (turnSignal.fillAmount < 0.85f && turnActivation == true)
                 {
                     TurnIsOff();
+                    animManivelle.speed = turnSignal.fillAmount;
+                    animPoignée.speed = turnSignal.fillAmount;
                 }
 
                 if (Vector2.Angle(currentJoystickRotation, joystickRotation) > 45 && Vector2.Angle(currentJoystickRotation, joystickRotation) < 100)

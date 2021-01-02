@@ -40,15 +40,15 @@ namespace Fleebos
 
                 switch (currentDifficulty)
                 {
-                    case Manager.Difficulty.EASY:
+                    case Difficulty.EASY:
                         ListOfNotesLength = Easy;
                         break;
 
-                    case Manager.Difficulty.MEDIUM:
+                    case Difficulty.MEDIUM:
                         ListOfNotesLength = Medium;
                         break;
 
-                    case Manager.Difficulty.HARD:
+                    case Difficulty.HARD:
                         ListOfNotesLength = Hard;
                         break;
                 }
