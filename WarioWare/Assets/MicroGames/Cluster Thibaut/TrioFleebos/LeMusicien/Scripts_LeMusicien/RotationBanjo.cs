@@ -27,6 +27,9 @@ namespace Fleebos
 
             public AudioClip[] soundList;
             public AudioSource randomChordAS;
+            public AudioSource crowd;
+            public AudioSource cheers;
+            public AudioSource boos;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
@@ -38,15 +41,15 @@ namespace Fleebos
                 switch (currentDifficulty)
                 {
                     case Difficulty.EASY:
-                        rotationValue = 60f;
-                        rotationPositions = 360f/rotationValue;
-                        break;
-                    case Difficulty.MEDIUM:
                         rotationValue = 45f;
                         rotationPositions = 360f/rotationValue;
                         break;
-                    case Difficulty.HARD:
+                    case Difficulty.MEDIUM:
                         rotationValue = 30f;
+                        rotationPositions = 360f/rotationValue;
+                        break;
+                    case Difficulty.HARD:
+                        rotationValue = 15f;
                         rotationPositions = 360f/rotationValue;
                         break;
                 }
@@ -58,6 +61,8 @@ namespace Fleebos
 
                 int rand = Random.Range(1, rotations.Count);
                 transform.eulerAngles = new Vector3(0, 0, rotations[rand]);
+
+                crowd.Play();
             }
 
             //FixedUpdate is called on a fixed time.
@@ -95,6 +100,8 @@ namespace Fleebos
             {
                 if (Tick == 8)
                 {
+                    crowd.Stop();
+
                     if (transform.eulerAngles.z > -1 && transform.eulerAngles.z < 1)
                     {
                         transform.eulerAngles = new Vector3(0, 0, 0);
@@ -107,6 +114,7 @@ namespace Fleebos
                         Manager.Instance.Result(true);
                         mouth.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * -1, transform.localScale.z);
                         victory.Play(0);
+                        cheers.Play();
                     }
 
                     else if (transform.eulerAngles.z != 0f)
@@ -114,6 +122,7 @@ namespace Fleebos
                         Debug.Log("loose");
                         Manager.Instance.Result(false);
                         defeat.Play(0);
+                        boos.Play();
                     }
 
                 }
