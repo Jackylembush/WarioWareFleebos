@@ -121,6 +121,11 @@ namespace Fleebos
                         NotesUI[3].GetComponent<AudioSource>().Play();
                         StartCoroutine(AnimateTheNote(3));
                     }
+                    if (Input.GetButtonDown("Right_Bumper"))
+                    {
+                        NotesUI[4].GetComponent<AudioSource>().Play();
+                        StartCoroutine(AnimateTheNote(4));
+                    }
                 }
 
             }

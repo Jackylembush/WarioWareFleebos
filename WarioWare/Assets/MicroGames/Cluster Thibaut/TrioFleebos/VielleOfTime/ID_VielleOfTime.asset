@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cluster: 2
   trio: Fleebos
-  haptiqueChal: 0
-  inputChal: 0
   indexEnum: 2
   verbe: Tournez et jouez
   microGameScene:
     sceneAsset: {fileID: 102900000, guid: b73f9ad270c138c48aae61cd3d1203c5, type: 3}
     required: 0
     buildIndex: 2
+  inputs: {fileID: 0}
   currentDifficulty: 0
+  idWeight: 0
+  hasBarrel: 0
