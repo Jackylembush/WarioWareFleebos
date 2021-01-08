@@ -20,6 +20,10 @@ namespace Fleebos
             public GameObject[] Inputs;
             public GameObject[] NotesUI;
             public List<GameObject> MusicNotes;
+            public GameObject solo;
+
+            public GameObject fire;
+            bool isOnFire = false;
 
             public GameObject[] VielleTouches;
             
@@ -96,6 +100,20 @@ namespace Fleebos
                         {
                             PlayNote();
                         }
+                    }
+                }
+
+                if (NoteOrder >= MusicNotes.Count && isOnFire == false)
+                {
+                    isOnFire = true;
+                    StartCoroutine(SoloPop(solo));
+                    foreach (GameObject go in NotesUI)
+                    {
+                        StartCoroutine(NotesVanish(go));                        
+                    }
+                    foreach (Transform child in fire.transform)
+                    {
+                        StartCoroutine(FirePop(child.gameObject));
                     }
                 }
 
@@ -185,6 +203,43 @@ namespace Fleebos
                 yield return new WaitForSeconds(0.2f);
                 VielleTouches[Order].transform.DOMoveY(-2.9f, 0.2f);
                 yield return new WaitForSeconds(0.2f);
+            }
+
+            IEnumerator NotesVanish(GameObject go)
+            {
+                if(go.GetComponentInChildren<Image>())
+                {
+                    Image sr = go.GetComponentInChildren<Image>();
+
+                    for (float i = 1; i > 0; i -= 0.01f)
+                    {
+                        sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, i);
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                    sr.color = new Color(0, 0, 0, 0);
+                }
+            }
+
+            IEnumerator SoloPop(GameObject go)
+            {
+                Image im = go.GetComponent<Image>();
+
+                for (float i = 0; i < 1; i += 0.01f)
+                {
+                    im.color = new Color(im.color.r, im.color.g, im.color.b, i);
+                    yield return new WaitForSeconds(0.01f);
+                }
+            }
+
+            IEnumerator FirePop(GameObject child)
+            {
+                Material mr = child.GetComponent<MeshRenderer>().materials[0];
+
+                for (float i = 0; i < 1; i += 0.01f)
+                {
+                    mr.SetFloat(Shader.PropertyToID("_Magic"), i);
+                    yield return new WaitForSeconds(0.01f);
+                }               
             }
         }
     }
