@@ -15,9 +15,6 @@ namespace Fleebos
             public float rotationValue;
             public float rotationPositions;
 
-            public AudioSource victory;
-            public AudioSource defeat;
-
             public GameObject mouth;
 
             public Animator m_Animator;
@@ -30,6 +27,8 @@ namespace Fleebos
             public AudioSource crowd;
             public AudioSource cheers;
             public AudioSource boos;
+
+            public ParticleSystem notesBanjo;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
@@ -41,15 +40,15 @@ namespace Fleebos
                 switch (currentDifficulty)
                 {
                     case Difficulty.EASY:
-                        rotationValue = 45f;
+                        rotationValue = 60f;
                         rotationPositions = 360f/rotationValue;
                         break;
                     case Difficulty.MEDIUM:
-                        rotationValue = 30f;
+                        rotationValue = 45f;
                         rotationPositions = 360f/rotationValue;
                         break;
                     case Difficulty.HARD:
-                        rotationValue = 15f;
+                        rotationValue = 30f;
                         rotationPositions = 360f/rotationValue;
                         break;
                 }
@@ -70,11 +69,12 @@ namespace Fleebos
             {
                 base.FixedUpdate(); //Do not erase this line!
 
-                if (Tick < 8 && rightTriggerPressed == false && Input.GetAxis("Right_Trigger") == 1f)
+                if (Tick < 6 && rightTriggerPressed == false && Input.GetAxis("Right_Trigger") == 1f)
                 {
                     transform.Rotate(new Vector3(0, 0, -rotationValue));
                     rightTriggerPressed = true;
                     RandomChord();
+                    notesBanjo.Play();
                 }
 
                 if (Input.GetAxis("Right_Trigger") == 0f)
@@ -82,52 +82,68 @@ namespace Fleebos
                     rightTriggerPressed = false;
                 }
 
-                if (Tick < 8 && leftTriggerPressed == false && Input.GetAxis("Left_Trigger") == 1f)
+                if (Tick < 6 && leftTriggerPressed == false && Input.GetAxis("Left_Trigger") == 1f)
                 {
                     transform.Rotate(new Vector3(0, 0, rotationValue));
                     leftTriggerPressed = true;
                     RandomChord();
+                    notesBanjo.Play();
                 }
 
                 if (Input.GetAxis("Left_Trigger") == 0f)
                 {
                     leftTriggerPressed = false;
                 }
+
+                if (transform.eulerAngles.z > -1 && transform.eulerAngles.z < 1)
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                }
+
+                if (transform.eulerAngles.z == 0f)
+                {
+                    mouth.transform.localScale = new Vector3(transform.localScale.x * 0.75f, transform.localScale.y * -0.75f, transform.localScale.z * 0.75f);
+                }
+                else
+                {
+                    mouth.transform.localScale = new Vector3(transform.localScale.x * 0.75f, transform.localScale.y * 0.75f, transform.localScale.z * 0.75f);
+                }
             }
 
             //TimedUpdate is called once every tick.
             public override void TimedUpdate()
             {
-                if (Tick == 8)
+                if (Tick == 6)
                 {
                     crowd.Stop();
 
-                    if (transform.eulerAngles.z > -1 && transform.eulerAngles.z < 1)
-                    {
-                        transform.eulerAngles = new Vector3(0, 0, 0);
-                    }
-
                     Debug.Log(transform.eulerAngles.z);
-                    if( transform.eulerAngles.z == 0f)
+                    if (transform.eulerAngles.z == 0f)
                     {
                         Debug.Log("win");
-                        Manager.Instance.Result(true);
-                        mouth.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * -1, transform.localScale.z);
-                        victory.Play(0);
                         cheers.Play();
                     }
 
                     else if (transform.eulerAngles.z != 0f)
                     {
                         Debug.Log("loose");
-                        Manager.Instance.Result(false);
-                        defeat.Play(0);
                         boos.Play();
                     }
+                }
 
+                if (Tick == 8)
+                {
+                    if (transform.eulerAngles.z == 0f)
+                    {
+                        Manager.Instance.Result(true);
+                    }
+
+                    else if (transform.eulerAngles.z != 0f)
+                    {
+                        Manager.Instance.Result(false);
+                    }
                 }
             }
-
             private void RandomChord()
             {
                 int randomSound = Random.Range(0, soundList.Length - 1);
