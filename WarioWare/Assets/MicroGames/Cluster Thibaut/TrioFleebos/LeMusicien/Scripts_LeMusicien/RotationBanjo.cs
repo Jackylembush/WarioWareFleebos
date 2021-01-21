@@ -22,11 +22,14 @@ namespace Fleebos
 
             public GameObject audiance;
 
+            public List<GameObject> bottles;
+
             public AudioClip[] soundList;
             public AudioSource randomChordAS;
             public AudioSource cheers;
             public AudioSource boos;
             public AudioSource victoire;
+            public AudioSource bottleBreaking;
 
             public ParticleSystem notesBanjo, VictoryNotesBanjo, GoldEffect, KnifeEffect;
             public override void Start()
@@ -111,7 +114,41 @@ namespace Fleebos
             //TimedUpdate is called once every tick.
             public override void TimedUpdate()
             {
-                // i need to put it in fixed update but it crashes the fucking audio
+
+                if (Tick < 7)
+                {
+                    if (Tick == 1)
+                    {
+                        bottles[5].SetActive(false);
+                        bottleBreaking.Play();
+                    }
+                    if (Tick == 2)
+                    {
+                        bottles[4].SetActive(false);
+                        bottleBreaking.Play();
+                    }
+                    if (Tick == 3)
+                    {
+                        bottles[3].SetActive(false);
+                        bottleBreaking.Play();
+                    }
+                    if (Tick == 4)
+                    {
+                        bottles[2].SetActive(false);
+                        bottleBreaking.Play();
+                    }
+                    if (Tick == 5)
+                    {
+                        bottles[1].SetActive(false);
+                        bottleBreaking.Play();
+                    }
+                    if (Tick == 6)
+                    {
+                        bottles[0].SetActive(false);
+                        bottleBreaking.Play();
+                    }
+                }
+
                 if (transform.eulerAngles.z == 0f && cheers.isPlaying == false)
                 {
                     cheers.Play();
