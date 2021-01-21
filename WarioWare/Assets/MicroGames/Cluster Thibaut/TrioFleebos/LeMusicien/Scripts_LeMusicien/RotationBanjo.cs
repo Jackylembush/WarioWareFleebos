@@ -24,11 +24,11 @@ namespace Fleebos
 
             public AudioClip[] soundList;
             public AudioSource randomChordAS;
-            public AudioSource crowd;
             public AudioSource cheers;
             public AudioSource boos;
+            public AudioSource victoire;
 
-            public ParticleSystem notesBanjo;
+            public ParticleSystem notesBanjo, VictoryNotesBanjo, GoldEffect, KnifeEffect;
             public override void Start()
             {
                 base.Start(); //Do not erase this line!
@@ -40,15 +40,15 @@ namespace Fleebos
                 switch (currentDifficulty)
                 {
                     case Difficulty.EASY:
-                        rotationValue = 60f;
-                        rotationPositions = 360f/rotationValue;
-                        break;
-                    case Difficulty.MEDIUM:
                         rotationValue = 45f;
                         rotationPositions = 360f/rotationValue;
                         break;
-                    case Difficulty.HARD:
+                    case Difficulty.MEDIUM:
                         rotationValue = 30f;
+                        rotationPositions = 360f/rotationValue;
+                        break;
+                    case Difficulty.HARD:
+                        rotationValue = 15f;
                         rotationPositions = 360f/rotationValue;
                         break;
                 }
@@ -60,8 +60,6 @@ namespace Fleebos
 
                 int rand = Random.Range(1, rotations.Count);
                 transform.eulerAngles = new Vector3(0, 0, rotations[rand]);
-
-                crowd.Play();
             }
 
             //FixedUpdate is called on a fixed time.
@@ -104,7 +102,7 @@ namespace Fleebos
                 {
                     mouth.transform.localScale = new Vector3(transform.localScale.x * 0.75f, transform.localScale.y * -0.75f, transform.localScale.z * 0.75f);
                 }
-                else
+                else if (transform.eulerAngles.z != 0f)
                 {
                     mouth.transform.localScale = new Vector3(transform.localScale.x * 0.75f, transform.localScale.y * 0.75f, transform.localScale.z * 0.75f);
                 }
@@ -113,21 +111,35 @@ namespace Fleebos
             //TimedUpdate is called once every tick.
             public override void TimedUpdate()
             {
+                // i need to put it in fixed update but it crashes the fucking audio
+                if (transform.eulerAngles.z == 0f && cheers.isPlaying == false)
+                {
+                    cheers.Play();
+                    boos.Stop();
+                    VictoryNotesBanjo.Play();
+                    victoire.Play();
+                }
+                else if (transform.eulerAngles.z != 0f && boos.isPlaying == false)
+                {
+                    boos.Play();
+                    cheers.Stop();
+                    VictoryNotesBanjo.Stop();
+                    victoire.Stop();
+                }
+
                 if (Tick == 6)
                 {
-                    crowd.Stop();
-
                     Debug.Log(transform.eulerAngles.z);
                     if (transform.eulerAngles.z == 0f)
                     {
                         Debug.Log("win");
-                        cheers.Play();
+                        GoldEffect.Play();
                     }
 
                     else if (transform.eulerAngles.z != 0f)
                     {
                         Debug.Log("loose");
-                        boos.Play();
+                        KnifeEffect.Play();
                     }
                 }
 

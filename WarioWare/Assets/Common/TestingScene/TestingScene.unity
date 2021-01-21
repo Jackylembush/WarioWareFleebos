@@ -533,8 +533,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idCard: {fileID: 11400000, guid: 01e534492547ad84db5f2a6913574803, type: 2}
-  bpm: 140
-  currentDifficulty: 2
+  bpm: 90
+  currentDifficulty: 1
   panel: {fileID: 137554992}
   resultText: {fileID: 224949527}
   verbePanel: {fileID: 967534524}

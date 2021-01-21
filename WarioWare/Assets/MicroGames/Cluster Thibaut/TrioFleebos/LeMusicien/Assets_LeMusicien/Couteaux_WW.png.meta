@@ -1,7 +1,19 @@
 fileFormatVersion: 2
-guid: 921e8739ed80c2144a51caa8c5a624ed
+guid: 7ed96f20e8bbf304ea34826a0a875734
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 8611381919494541721
+    second: Couteaux_WW_0
+  - first:
+      213: 5457240819719442930
+    second: Couteaux_WW_1
+  - first:
+      213: 9193778423582063154
+    second: Couteaux_WW_2
+  - first:
+      213: 4757672142245569596
+    second: Couteaux_WW_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,7 +133,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Couteaux_WW_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 56
+        width: 281
+        height: 520
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99191b01b36c18770800000000000000
+      internalID: 8611381919494541721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Couteaux_WW_1
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 0
+        width: 326
+        height: 651
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f19321ac930cbb40800000000000000
+      internalID: 5457240819719442930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Couteaux_WW_2
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 147
+        width: 206
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23a7249f3ccd69f70800000000000000
+      internalID: 9193778423582063154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Couteaux_WW_3
+      rect:
+        serializedVersion: 2
+        x: 1235
+        y: 35
+        width: 498
+        height: 545
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c34a15c2b95a60240800000000000000
+      internalID: 4757672142245569596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
