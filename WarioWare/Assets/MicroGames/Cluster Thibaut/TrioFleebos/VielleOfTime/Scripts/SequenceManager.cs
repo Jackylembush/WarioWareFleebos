@@ -15,6 +15,8 @@ namespace Fleebos
 
         public class SequenceManager : TimedBehaviour
         {
+            public AudioSource drone;
+
             public GameObject particleWin;
 
             public GameObject[] Inputs;
