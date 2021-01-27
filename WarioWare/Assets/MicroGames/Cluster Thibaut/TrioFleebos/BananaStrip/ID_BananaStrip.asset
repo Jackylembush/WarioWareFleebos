@@ -15,7 +15,7 @@ MonoBehaviour:
   cluster: 2
   trio: Fleebos
   indexEnum: 2
-  verbe: "\xC9pluchez !"
+  verbe: "\xC9plucher !"
   microGameScene:
     sceneAsset: {fileID: 102900000, guid: b1f4bc82dd49fbc408d36f9a0eb2bd9e, type: 3}
     required: 0
